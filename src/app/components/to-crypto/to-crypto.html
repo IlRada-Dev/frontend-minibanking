@@ -1,0 +1,22 @@
+<h2>Convert Balance to Crypto</h2>
+
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="toCurrency">Target Currency:</label>
+    <input type="text" id="toCurrency" [(ngModel)]="toCurrency" name="toCurrency" placeholder="e.g., BTC, ETH" required>
+  </div>
+
+  <button type="submit" [disabled]="loading">Convert</button>
+</form>
+
+<div *ngIf="loading">Converting...</div>
+
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="conversion" class="result">
+  <h3>Conversion Result</h3>
+  <p><strong>From:</strong> {{ conversion.from_currency }} {{ conversion.original_balance | number:'1.2-2' }}</p>
+  <p><strong>To:</strong> {{ conversion.to_currency }} {{ conversion.converted_balance | number:'1.8-8' }}</p>
+  <p><strong>Rate:</strong> {{ conversion.rate | number:'1.8-8' }}</p>
+  <p><strong>Provider:</strong> {{ conversion.provider }}</p>
+</div>

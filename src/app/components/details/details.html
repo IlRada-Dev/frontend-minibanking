@@ -1,0 +1,15 @@
+<h2>Transaction Details</h2>
+
+<div *ngIf="loading">Loading transaction...</div>
+
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error && transaction">
+  <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+  <p><strong>Account ID:</strong> {{ transaction.id_account }}</p>
+  <p><strong>Type:</strong> {{ transaction.type }}</p>
+  <p><strong>Amount:</strong> {{ transaction.amount | number:'1.2-2' }}</p>
+  <p><strong>Description:</strong> {{ transaction.description }}</p>
+  <p><strong>Created At:</strong> {{ transaction.created_at }}</p>
+  <p><strong>Balance After:</strong> {{ transaction.balance_after | number:'1.2-2' }}</p>
+</div>

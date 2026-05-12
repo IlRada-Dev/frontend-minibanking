@@ -1,0 +1,11 @@
+<h2>Balance for Account {{ accountId }}</h2>
+
+<div *ngIf="loading">Loading balance...</div>
+
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error && balance">
+  <p><strong>Account ID:</strong> {{ balance.id_account }}</p>
+  <p><strong>Currency:</strong> {{ balance.currency }}</p>
+  <p><strong>Balance:</strong> {{ balance.balance | number:'1.2-2' }}</p>
+</div>
