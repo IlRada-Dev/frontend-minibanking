@@ -9,30 +9,29 @@ import { BankingService, Transaction } from '../../services/banking.service';
   styleUrl: './details.css',
 })
 export class Details implements OnInit {
-  transaction: Transaction | null = null;
+  transactions: Transaction[] = [];
   loading = true;
   error: string | null = null;
   accountId = 1; // TODO: Make this configurable
-  transactionId = 1; // TODO: Make this configurable
 
   constructor(private bankingService: BankingService) {}
 
   ngOnInit() {
-    this.loadTransaction();
+    this.loadTransactions();
   }
 
-  loadTransaction() {
+  loadTransactions() {
     this.loading = true;
     this.error = null;
-    this.bankingService.getTransaction(this.accountId, this.transactionId).subscribe({
-      next: (transaction) => {
-        this.transaction = transaction;
+    this.bankingService.getTransactions(this.accountId).subscribe({
+      next: (transactions) => {
+        this.transactions = transactions;
         this.loading = false;
       },
       error: (err) => {
-        this.error = 'Failed to load transaction';
+        this.error = 'Failed to load transactions';
         this.loading = false;
-        console.error('Error loading transaction:', err);
+        console.error('Error loading transactions:', err);
       }
     });
   }
