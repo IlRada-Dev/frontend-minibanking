@@ -1,0 +1,30 @@
+<section class="login-card">
+  <div class="section-header">
+    <h2>Select Account</h2>
+    <p class="hero-subtitle">Pick the account you want to work with and then use the menu to move between actions.</p>
+  </div>
+
+  <div *ngIf="loading" class="info-box">Loading accounts...</div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error && accounts.length === 0" class="info-box">
+    <p>No accounts are available.</p>
+  </div>
+
+  <ul *ngIf="!loading && !error && accounts.length > 0" class="account-list">
+    <li *ngFor="let account of accounts">
+      <button type="button" (click)="selectAccount(account.id)">
+        <strong>{{ account.owner_name }}</strong>
+        <span class="small-text">Account #{{ account.id }} · {{ account.currency }}</span>
+      </button>
+      <div class="small-text">
+        {{ account.tax_id }} · Created {{ account.created_at }}
+      </div>
+    </li>
+  </ul>
+
+  <div *ngIf="accountSelection.selectedAccountId() !== null" class="success">
+    <p>Current account: {{ accountSelection.selectedAccountId() }}</p>
+  </div>
+</section>

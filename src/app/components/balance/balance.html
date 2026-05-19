@@ -1,11 +1,24 @@
-<h2>Balance for Account {{ accountId }}</h2>
+<section class="form-card">
+  <div class="section-header">
+    <h2>Balance</h2>
+    <p class="hero-subtitle">See your current account balance in a crisp overview.</p>
+  </div>
 
-<div *ngIf="loading">Loading balance...</div>
+  <div *ngIf="accountId === null && !loading" class="info-box">
+    <p>Please select an account first on the login page.</p>
+  </div>
 
-<div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="accountId !== null" class="info-box">
+    <p><strong>Selected account:</strong> {{ accountId }}</p>
+  </div>
 
-<div *ngIf="!loading && !error && balance">
-  <p><strong>Account ID:</strong> {{ balance.id_account }}</p>
-  <p><strong>Currency:</strong> {{ balance.currency }}</p>
-  <p><strong>Balance:</strong> {{ balance.balance | number:'1.2-2' }}</p>
-</div>
+  <div *ngIf="loading" class="info-box">Loading balance...</div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error && balance" class="info-box">
+    <p><strong>Account ID:</strong> {{ balance.id_account }}</p>
+    <p><strong>Currency:</strong> {{ balance.currency }}</p>
+    <p><strong>Balance:</strong> {{ balance.balance | number:'1.2-2' }}</p>
+  </div>
+</section>

@@ -1,34 +1,44 @@
-<h2>Transaction Details</h2>
+<section class="table-card">
+  <h2>Transaction Details</h2>
 
-<div *ngIf="loading">Loading transactions...</div>
+  <div *ngIf="accountId === null && !loading" class="info-box">
+    <p>Please select an account first on the login page.</p>
+  </div>
 
-<div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="accountId !== null" class="info-box">
+    <p><strong>Selected account:</strong> {{ accountId }}</p>
+  </div>
 
-<div *ngIf="!loading && !error && transactions.length === 0">
-  <p>No transactions found for account {{ accountId }}.</p>
-</div>
+  <div *ngIf="loading" class="info-box">Loading transactions...</div>
 
-<div *ngIf="!loading && !error && transactions.length > 0">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Type</th>
-        <th>Amount</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Balance After</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let transaction of transactions">
-        <td>{{ transaction.id }}</td>
-        <td>{{ transaction.type }}</td>
-        <td>{{ transaction.amount | number:'1.2-2' }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>{{ transaction.created_at }}</td>
-        <td>{{ transaction.balance_after | number:'1.2-2' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error && transactions.length === 0 && accountId !== null" class="info-box">
+    <p>No transactions found for account {{ accountId }}.</p>
+  </div>
+
+  <div *ngIf="!loading && !error && transactions.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Balance After</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.id }}</td>
+          <td>{{ transaction.type }}</td>
+          <td>{{ transaction.amount | number:'1.2-2' }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>{{ transaction.created_at }}</td>
+          <td>{{ transaction.balance_after | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BankingService, BalanceData } from '../../services/banking.service';
+import { AccountSelectionService } from '../../services/account-selection.service';
 
 @Component({
   selector: 'app-balance',
@@ -12,15 +13,29 @@ export class Balance implements OnInit {
   balance: BalanceData | null = null;
   loading = true;
   error: string | null = null;
-  accountId = 1; // TODO: Make this configurable
 
-  constructor(private bankingService: BankingService) {}
+  constructor(
+    private bankingService: BankingService,
+    public accountSelection: AccountSelectionService
+  ) {}
+
+  get accountId(): number | null {
+    return this.accountSelection.selectedAccountId();
+  }
 
   ngOnInit() {
-    this.loadBalance();
+    if (this.accountId !== null) {
+      this.loadBalance();
+    } else {
+      this.loading = false;
+    }
   }
 
   loadBalance() {
+    if (this.accountId === null) {
+      return;
+    }
+
     this.loading = true;
     this.error = null;
     this.bankingService.getBalance(this.accountId).subscribe({

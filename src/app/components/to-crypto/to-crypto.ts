@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BankingService, Conversion } from '../../services/banking.service';
+import { AccountSelectionService } from '../../services/account-selection.service';
 
 @Component({
   selector: 'app-to-crypto',
@@ -10,15 +11,26 @@ import { BankingService, Conversion } from '../../services/banking.service';
   styleUrl: './to-crypto.css',
 })
 export class ToCrypto {
-  accountId = 1; // TODO: Make this configurable
   toCurrency = 'BTC';
   conversion: Conversion | null = null;
   loading = false;
   error: string | null = null;
 
-  constructor(private bankingService: BankingService) {}
+  constructor(
+    private bankingService: BankingService,
+    public accountSelection: AccountSelectionService
+  ) {}
+
+  get accountId(): number | null {
+    return this.accountSelection.selectedAccountId();
+  }
 
   onSubmit() {
+    if (this.accountId === null) {
+      this.error = 'Please select an account first';
+      return;
+    }
+
     if (!this.toCurrency.trim()) {
       this.error = 'Please enter a target currency';
       return;

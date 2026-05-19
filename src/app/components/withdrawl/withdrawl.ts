@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BankingService, Transaction } from '../../services/banking.service';
+import { AccountSelectionService } from '../../services/account-selection.service';
 
 @Component({
   selector: 'app-withdrawl',
@@ -10,16 +11,27 @@ import { BankingService, Transaction } from '../../services/banking.service';
   styleUrl: './withdrawl.css',
 })
 export class Withdrawl {
-  accountId = 1; // TODO: Make this configurable
   amount: number | null = null;
   description = '';
   loading = false;
   error: string | null = null;
   success: Transaction | null = null;
 
-  constructor(private bankingService: BankingService) {}
+  constructor(
+    private bankingService: BankingService,
+    public accountSelection: AccountSelectionService
+  ) {}
+
+  get accountId(): number | null {
+    return this.accountSelection.selectedAccountId();
+  }
 
   onSubmit() {
+    if (this.accountId === null) {
+      this.error = 'Please select an account first';
+      return;
+    }
+
     if (this.amount === null || this.amount <= 0 || !this.description.trim()) {
       this.error = 'Please enter a valid amount and description';
       return;
