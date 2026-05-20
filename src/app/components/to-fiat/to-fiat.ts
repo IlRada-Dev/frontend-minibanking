@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BankingService, Conversion } from '../../services/banking.service';
@@ -18,7 +18,9 @@ export class ToFiat {
 
   constructor(
     private bankingService: BankingService,
-    public accountSelection: AccountSelectionService
+    public accountSelection: AccountSelectionService,
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef
   ) {}
 
   get accountId(): number | null {
@@ -42,12 +44,18 @@ export class ToFiat {
 
     this.bankingService.convertFiat(this.accountId, this.toCurrency.trim()).subscribe({
       next: (conversion) => {
-        this.conversion = conversion;
-        this.loading = false;
+        this.ngZone.run(() => {
+          this.conversion = conversion;
+          this.loading = false;
+          this.cd.detectChanges();
+        });
       },
       error: (err) => {
-        this.error = 'Failed to convert balance';
-        this.loading = false;
+        this.ngZone.run(() => {
+          this.error = 'Failed to convert balance';
+          this.loading = false;
+          this.cd.detectChanges();
+        });
         console.error('Error converting balance:', err);
       }
     });

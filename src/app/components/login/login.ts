@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BankingService, Account } from '../../services/banking.service';
@@ -17,7 +17,8 @@ export class Login implements OnInit {
   constructor(
     private bankingService: BankingService,
     private router: Router,
-    public accountSelection: AccountSelectionService
+    public accountSelection: AccountSelectionService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -31,10 +32,12 @@ export class Login implements OnInit {
       next: (accounts) => {
         this.accounts = accounts;
         this.loading = false;
+        this.cd.detectChanges();
       },
       error: (err) => {
         this.error = 'Failed to load accounts';
         this.loading = false;
+        this.cd.detectChanges();
         console.error('Error loading accounts:', err);
       }
     });

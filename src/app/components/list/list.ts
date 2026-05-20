@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BankingService, Account } from '../../services/banking.service';
 
@@ -13,7 +13,11 @@ export class List implements OnInit {
   loading = true;
   error: string | null = null;
 
-  constructor(private bankingService: BankingService) {}
+  constructor(
+    private bankingService: BankingService,
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.loadAccounts();
@@ -24,12 +28,18 @@ export class List implements OnInit {
     this.error = null;
     this.bankingService.getAccounts().subscribe({
       next: (accounts) => {
-        this.accounts = accounts;
-        this.loading = false;
+        this.ngZone.run(() => {
+          this.accounts = accounts;
+          this.loading = false;
+          this.cd.detectChanges();
+        });
       },
       error: (err) => {
-        this.error = 'Failed to load accounts';
-        this.loading = false;
+        this.ngZone.run(() => {
+          this.error = 'Failed to load accounts';
+          this.loading = false;
+          this.cd.detectChanges();
+        });
         console.error('Error loading accounts:', err);
       }
     });

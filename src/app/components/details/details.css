@@ -1,0 +1,214 @@
+/* Transaction Details Styling */
+
+section {
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #c084fc, #d8b4fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.info-box {
+  background: linear-gradient(135deg, rgba(20, 28, 50, 0.8), rgba(15, 20, 40, 0.95));
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 14px;
+  padding: 1.2rem;
+  margin: 1.5rem 0;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.info-box p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.error {
+  background: linear-gradient(135deg, rgba(120, 32, 32, 0.3), rgba(100, 20, 20, 0.2));
+  border: 1.5px solid rgba(252, 165, 165, 0.4);
+  border-radius: 14px;
+  padding: 1.2rem;
+  color: #fca5a5;
+  margin: 1.5rem 0;
+  font-weight: 500;
+  animation: shake 0.3s ease-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* Table Styling Enhancements */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.95), rgba(5, 8, 18, 0.98));
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+  animation: slideInUp 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+table thead {
+  background: linear-gradient(135deg, rgba(20, 28, 50, 0.95), rgba(30, 50, 90, 0.08));
+  border-bottom: 2px solid rgba(168, 85, 247, 0.2);
+}
+
+table th {
+  padding: 1.1rem 1rem;
+  text-align: left;
+  color: #d8b4fe;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(96, 165, 250, 0.1);
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+table tbody tr {
+  transition: all 0.2s ease;
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.95), rgba(5, 8, 18, 0.98));
+}
+
+table tbody tr:hover {
+  background: rgba(168, 85, 247, 0.12);
+  transform: scale(1.01);
+  box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.05);
+}
+
+table tbody tr:hover td {
+  color: #e2e8f0;
+}
+
+table th:first-child,
+table td:first-child {
+  padding-left: 1.2rem;
+}
+
+table th:last-child,
+table td:last-child {
+  padding-right: 1.2rem;
+}
+
+/* Transaction Type Styling */
+table td:nth-child(2) {
+  font-weight: 600;
+  color: #a78bfa;
+}
+
+/* Amount Styling */
+table td:nth-child(3) {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+table tbody tr:hover td:nth-child(3) {
+  color: #fbbf24;
+}
+
+/* Amount Styling */
+table td:nth-child(3) {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+table tbody tr:hover td:nth-child(3) {
+  color: #fbbf24;
+}
+
+/* Date Styling */
+table td:nth-child(5) {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Balance After Styling */
+table td:nth-child(6) {
+  font-weight: 600;
+}
+
+/* Empty State */
+.no-transactions {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #94a3b8;
+  font-size: 1.05rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  table th,
+  table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  table th:first-child,
+  table td:first-child {
+    padding-left: 0.5rem;
+  }
+
+  table th:last-child,
+  table td:last-child {
+    padding-right: 0.5rem;
+  }
+
+  .info-box {
+    padding: 1rem;
+  }
+
+  table tbody tr:hover {
+    transform: none;
+  }
+}

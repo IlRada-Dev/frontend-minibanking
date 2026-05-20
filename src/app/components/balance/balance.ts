@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BankingService, BalanceData } from '../../services/banking.service';
 import { AccountSelectionService } from '../../services/account-selection.service';
@@ -16,7 +16,9 @@ export class Balance implements OnInit {
 
   constructor(
     private bankingService: BankingService,
-    public accountSelection: AccountSelectionService
+    public accountSelection: AccountSelectionService,
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef
   ) {}
 
   get accountId(): number | null {
@@ -40,12 +42,18 @@ export class Balance implements OnInit {
     this.error = null;
     this.bankingService.getBalance(this.accountId).subscribe({
       next: (balance) => {
-        this.balance = balance;
-        this.loading = false;
+        this.ngZone.run(() => {
+          this.balance = balance;
+          this.loading = false;
+          this.cd.detectChanges();
+        });
       },
       error: (err) => {
-        this.error = 'Failed to load balance';
-        this.loading = false;
+        this.ngZone.run(() => {
+          this.error = 'Failed to load balance';
+          this.loading = false;
+          this.cd.detectChanges();
+        });
         console.error('Error loading balance:', err);
       }
     });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BankingService, Transaction } from '../../services/banking.service';
@@ -19,7 +19,9 @@ export class Withdrawl {
 
   constructor(
     private bankingService: BankingService,
-    public accountSelection: AccountSelectionService
+    public accountSelection: AccountSelectionService,
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef
   ) {}
 
   get accountId(): number | null {
@@ -43,14 +45,20 @@ export class Withdrawl {
 
     this.bankingService.withdraw(this.accountId, this.amount, this.description.trim()).subscribe({
       next: (transaction) => {
-        this.success = transaction;
-        this.loading = false;
-        this.amount = null;
-        this.description = '';
+        this.ngZone.run(() => {
+          this.success = transaction;
+          this.loading = false;
+          this.amount = null;
+          this.description = '';
+          this.cd.detectChanges();
+        });
       },
       error: (err) => {
-        this.error = 'Failed to make withdrawal';
-        this.loading = false;
+        this.ngZone.run(() => {
+          this.error = 'Failed to make withdrawal';
+          this.loading = false;
+          this.cd.detectChanges();
+        });
         console.error('Error making withdrawal:', err);
       }
     });
