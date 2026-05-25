@@ -195,14 +195,7 @@ button:disabled {
   }
 }
 
-.result p {
-  margin: 1rem 0;
-  line-height: 1.7;
-  font-size: 0.95rem;
-}
-
-.result strong {
-  color: #fcd34d;
+/* ...existing code... */
   font-weight: 600;
 }
 
