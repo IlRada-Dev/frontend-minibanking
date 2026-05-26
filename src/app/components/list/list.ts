@@ -1,6 +1,8 @@
 import { Component, NgZone, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { BankingService, Account } from '../../services/banking.service';
+import { AccountSelectionService } from '../../services/account-selection.service';
 
 @Component({
   selector: 'app-list',
@@ -15,6 +17,8 @@ export class List implements OnInit {
 
   constructor(
     private bankingService: BankingService,
+    private router: Router,
+    public accountSelection: AccountSelectionService,
     private ngZone: NgZone,
     private cd: ChangeDetectorRef
   ) {}
@@ -43,5 +47,10 @@ export class List implements OnInit {
         console.error('Error loading accounts:', err);
       }
     });
+  }
+
+  selectAccount(accountId: number) {
+    this.accountSelection.selectAccount(accountId);
+    this.router.navigate(['/balance']);
   }
 }

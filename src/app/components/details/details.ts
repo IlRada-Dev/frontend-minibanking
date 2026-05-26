@@ -43,7 +43,9 @@ export class Details implements OnInit {
     this.bankingService.getTransactions(this.accountId).subscribe({
       next: (transactions) => {
         this.ngZone.run(() => {
-          this.transactions = transactions;
+          this.transactions = transactions.sort((a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
           this.loading = false;
           this.cd.detectChanges();
         });

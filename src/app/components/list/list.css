@@ -186,6 +186,27 @@ table td:nth-child(5) {
   font-size: 0.9rem;
 }
 
+.login-button {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #0f172a;
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+  opacity: 0.95;
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
 /* Row Count Display */
 .row-count {
   margin-top: 1.5rem;

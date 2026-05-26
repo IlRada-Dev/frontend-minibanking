@@ -1,7 +1,7 @@
 <section class="table-card">
   <div class="section-header">
     <h2>Accounts</h2>
-    <p class="hero-subtitle">Review the available accounts before selecting the one to manage.</p>
+    <p class="hero-subtitle">Select an account here to login and go to the balance page.</p>
   </div>
 
   <div *ngIf="loading" class="info-box">Loading accounts...</div>
@@ -17,6 +17,7 @@
           <th>Owner Name</th>
           <th>Currency</th>
           <th>Created At</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,9 @@
           <td>{{ account.owner_name }}</td>
           <td>{{ account.currency }}</td>
           <td>{{ account.created_at }}</td>
+          <td>
+            <button type="button" class="login-button" (click)="selectAccount(account.id)">Login</button>
+          </td>
         </tr>
       </tbody>
     </table>
